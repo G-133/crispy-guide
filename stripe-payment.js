@@ -1,7 +1,9 @@
 // Stripe Payment Integration
 
 // Stripe Payment Links - готовое решение для оплаты
-const STRIPE_PAYMENT_LINK_DEFAULT = 'https://buy.stripe.com/test_6oU28sd3Xcoud718iUgrS00';
+// ВНИМАНИЕ: Если ссылка неактивна, создайте новую в Stripe Dashboard и обновите здесь
+// Дефолтная ссылка для услуг без специальной ссылки (обновите на активную при необходимости)
+const STRIPE_PAYMENT_LINK_DEFAULT = 'https://buy.stripe.com/test_00w6oIbZT4W21oj9mYgrS02';
 const STRIPE_PAYMENT_LINK_DESIGN = 'https://buy.stripe.com/test_00w6oIbZT4W21oj9mYgrS02'; // Для услуги "Веб-дизайн"
 const STRIPE_PAYMENT_LINK_DEVELOPMENT = 'https://buy.stripe.com/test_5kQbJ2gg9606aYTgPqgrS03'; // Для услуги "Разработка"
 const STRIPE_PAYMENT_LINK_SEO = 'https://buy.stripe.com/test_eVq5kE7JDewCff9ar2grS04'; // Для услуги "SEO оптимизация"
@@ -258,6 +260,15 @@ async function handlePaymentSubmit(event) {
                  serviceName.toLowerCase().includes('магазин') ||
                  serviceName.toLowerCase().includes('shop')) {
             paymentLink = STRIPE_PAYMENT_LINK_ECOMMERCE;
+        }
+        
+        // Проверяем наличие активной ссылки
+        if (!paymentLink || paymentLink.includes('undefined') || paymentLink.length < 10) {
+            showMessage('Ошибка: ссылка для оплаты не настроена. Пожалуйста, свяжитесь с нами для оформления заказа.', 'error');
+            submitButton.disabled = false;
+            if (buttonText) buttonText.textContent = 'Оплатить';
+            if (spinner) spinner.classList.add('hidden');
+            return;
         }
         
         // Создаем URL с параметрами для возврата
