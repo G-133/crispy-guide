@@ -219,13 +219,25 @@ async function handlePaymentSubmit(event) {
         const amount = sessionStorage.getItem('paymentAmount') || '5000';
         
         // Выбираем правильный Payment Link в зависимости от услуги
+        // Используем активные ссылки, если специальная неактивна - fallback на дефолтную
         let paymentLink = STRIPE_PAYMENT_LINK_DEFAULT;
+        
+        // Список всех доступных ссылок для fallback
+        const activeLinks = [
+            STRIPE_PAYMENT_LINK_DESIGN,
+            STRIPE_PAYMENT_LINK_DEVELOPMENT,
+            STRIPE_PAYMENT_LINK_SEO,
+            STRIPE_PAYMENT_LINK_RESPONSIVE,
+            STRIPE_PAYMENT_LINK_SUPPORT,
+            STRIPE_PAYMENT_LINK_ECOMMERCE,
+            STRIPE_PAYMENT_LINK_DEFAULT
+        ];
         
         // Проверяем услугу "Веб-дизайн"
         if (serviceName.toLowerCase().includes('веб-дизайн') || 
             serviceName.toLowerCase().includes('веб дизайн') ||
             serviceName.toLowerCase().includes('web design') ||
-            serviceName.toLowerCase().includes('дизайн')) {
+            (serviceName.toLowerCase().includes('дизайн') && !serviceName.toLowerCase().includes('веб'))) {
             paymentLink = STRIPE_PAYMENT_LINK_DESIGN;
         }
         // Проверяем услугу "Разработка"
@@ -235,7 +247,6 @@ async function handlePaymentSubmit(event) {
         }
         // Проверяем услугу "SEO оптимизация"
         else if (serviceName.toLowerCase().includes('seo') || 
-                 serviceName.toLowerCase().includes('оптимизация') ||
                  serviceName.toLowerCase().includes('seo оптимизация')) {
             paymentLink = STRIPE_PAYMENT_LINK_SEO;
         }
@@ -257,18 +268,48 @@ async function handlePaymentSubmit(event) {
         else if (serviceName.toLowerCase().includes('e-commerce') || 
                  serviceName.toLowerCase().includes('ecommerce') ||
                  serviceName.toLowerCase().includes('интернет-магазин') ||
-                 serviceName.toLowerCase().includes('магазин') ||
-                 serviceName.toLowerCase().includes('shop')) {
+                 (serviceName.toLowerCase().includes('магазин') && !serviceName.toLowerCase().includes('интернет'))) {
             paymentLink = STRIPE_PAYMENT_LINK_ECOMMERCE;
         }
         
-        // Проверяем наличие активной ссылки
-        if (!paymentLink || paymentLink.includes('undefined') || paymentLink.length < 10) {
-            showMessage('Ошибка: ссылка для оплаты не настроена. Пожалуйста, свяжитесь с нами для оформления заказа.', 'error');
-            submitButton.disabled = false;
-            if (buttonText) buttonText.textContent = 'Оплатить';
-            if (spinner) spinner.classList.add('hidden');
-            return;
+        // Fallback: если ссылка недействительна, используем первую доступную активную
+        if (!paymentLink || paymentLink === 'undefined' || !paymentLink.startsWith('https://buy.stripe.com/')) {
+            paymentLink = activeLinks.find(link => link && link.startsWith('https://buy.stripe.com/')) || STRIPE_PAYMENT_LINK_DEFAULT;
+        }
+        
+        // Финальная проверка ссылки перед использованием
+        if (!paymentLink || 
+            paymentLink.includes('undefined') || 
+            paymentLink.length < 10 || 
+            !paymentLink.startsWith('https://buy.stripe.com/')) {
+            
+            // Пытаемся найти любую рабочую ссылку из списка
+            const backupLink = activeLinks.find(link => 
+                link && 
+                link.startsWith('https://buy.stripe.com/') && 
+                !link.includes('undefined')
+            );
+            
+            if (backupLink) {
+                paymentLink = backupLink;
+                console.warn('Используется резервная ссылка для оплаты:', paymentLink);
+            } else {
+                // Если все ссылки неактивны, показываем ошибку
+                showMessage('Временная недоступность оплаты. Пожалуйста, свяжитесь с нами напрямую для оформления заказа.', 'error');
+                submitButton.disabled = false;
+                if (buttonText) buttonText.textContent = 'Оплатить';
+                if (spinner) spinner.classList.add('hidden');
+                
+                // Предлагаем связаться через форму обратной связи
+                setTimeout(() => {
+                    closePaymentModal();
+                    const contactSection = document.getElementById('contact');
+                    if (contactSection) {
+                        contactSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 3000);
+                return;
+            }
         }
         
         // Создаем URL с параметрами для возврата
@@ -276,7 +317,15 @@ async function handlePaymentSubmit(event) {
         const paymentLinkWithParams = `${paymentLink}?client_reference_id=${Date.now()}&success_url=${encodeURIComponent(returnUrl)}`;
         
         // Перенаправляем на Stripe Payment Link
-        window.location.href = paymentLinkWithParams;
+        try {
+            window.location.href = paymentLinkWithParams;
+        } catch (error) {
+            console.error('Ошибка перенаправления на страницу оплаты:', error);
+            showMessage('Ошибка при переходе на страницу оплаты. Пожалуйста, попробуйте позже или свяжитесь с нами.', 'error');
+            submitButton.disabled = false;
+            if (buttonText) buttonText.textContent = 'Оплатить';
+            if (spinner) spinner.classList.add('hidden');
+        }
         
         // Альтернативный вариант с модальным окном (если нужен кастомный UI):
         // await processCustomPayment(selectedMethod, amount);
