@@ -1,7 +1,13 @@
 // Stripe Payment Integration
 
-// Stripe Payment Link - готовое решение для оплаты
-const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/test_6oU28sd3Xcoud718iUgrS00';
+// Stripe Payment Links - готовое решение для оплаты
+const STRIPE_PAYMENT_LINK_DEFAULT = 'https://buy.stripe.com/test_6oU28sd3Xcoud718iUgrS00';
+const STRIPE_PAYMENT_LINK_DESIGN = 'https://buy.stripe.com/test_00w6oIbZT4W21oj9mYgrS02'; // Для услуги "Веб-дизайн"
+const STRIPE_PAYMENT_LINK_DEVELOPMENT = 'https://buy.stripe.com/test_5kQbJ2gg9606aYTgPqgrS03'; // Для услуги "Разработка"
+const STRIPE_PAYMENT_LINK_SEO = 'https://buy.stripe.com/test_eVq5kE7JDewCff9ar2grS04'; // Для услуги "SEO оптимизация"
+const STRIPE_PAYMENT_LINK_RESPONSIVE = 'https://buy.stripe.com/test_eVq14obZTcou6IDdDegrS05'; // Для услуги "Адаптивность"
+const STRIPE_PAYMENT_LINK_SUPPORT = 'https://buy.stripe.com/test_eVq14o8NH74ad71ar2grS06'; // Для услуги "Поддержка"
+const STRIPE_PAYMENT_LINK_ECOMMERCE = 'https://buy.stripe.com/test_7sY7sMe811JQ1oj8iUgrS07'; // Для услуги "E-Commerce"
 
 // Для кастомной формы с Payment Elements (опционально)
 let stripe;
@@ -210,9 +216,53 @@ async function handlePaymentSubmit(event) {
         const serviceName = sessionStorage.getItem('paymentService') || 'Услуга';
         const amount = sessionStorage.getItem('paymentAmount') || '5000';
         
+        // Выбираем правильный Payment Link в зависимости от услуги
+        let paymentLink = STRIPE_PAYMENT_LINK_DEFAULT;
+        
+        // Проверяем услугу "Веб-дизайн"
+        if (serviceName.toLowerCase().includes('веб-дизайн') || 
+            serviceName.toLowerCase().includes('веб дизайн') ||
+            serviceName.toLowerCase().includes('web design') ||
+            serviceName.toLowerCase().includes('дизайн')) {
+            paymentLink = STRIPE_PAYMENT_LINK_DESIGN;
+        }
+        // Проверяем услугу "Разработка"
+        else if (serviceName.toLowerCase().includes('разработка') || 
+                 serviceName.toLowerCase().includes('development')) {
+            paymentLink = STRIPE_PAYMENT_LINK_DEVELOPMENT;
+        }
+        // Проверяем услугу "SEO оптимизация"
+        else if (serviceName.toLowerCase().includes('seo') || 
+                 serviceName.toLowerCase().includes('оптимизация') ||
+                 serviceName.toLowerCase().includes('seo оптимизация')) {
+            paymentLink = STRIPE_PAYMENT_LINK_SEO;
+        }
+        // Проверяем услугу "Адаптивность"
+        else if (serviceName.toLowerCase().includes('адаптивность') || 
+                 serviceName.toLowerCase().includes('адаптивный') ||
+                 serviceName.toLowerCase().includes('responsive') ||
+                 serviceName.toLowerCase().includes('mobile')) {
+            paymentLink = STRIPE_PAYMENT_LINK_RESPONSIVE;
+        }
+        // Проверяем услугу "Поддержка"
+        else if (serviceName.toLowerCase().includes('поддержка') || 
+                 serviceName.toLowerCase().includes('поддержки') ||
+                 serviceName.toLowerCase().includes('support') ||
+                 serviceName.toLowerCase().includes('техподдержка')) {
+            paymentLink = STRIPE_PAYMENT_LINK_SUPPORT;
+        }
+        // Проверяем услугу "E-Commerce"
+        else if (serviceName.toLowerCase().includes('e-commerce') || 
+                 serviceName.toLowerCase().includes('ecommerce') ||
+                 serviceName.toLowerCase().includes('интернет-магазин') ||
+                 serviceName.toLowerCase().includes('магазин') ||
+                 serviceName.toLowerCase().includes('shop')) {
+            paymentLink = STRIPE_PAYMENT_LINK_ECOMMERCE;
+        }
+        
         // Создаем URL с параметрами для возврата
         const returnUrl = `${window.location.origin}/thank-you.html?service=${encodeURIComponent(serviceName)}&amount=${amount}`;
-        const paymentLinkWithParams = `${STRIPE_PAYMENT_LINK}?client_reference_id=${Date.now()}&success_url=${encodeURIComponent(returnUrl)}`;
+        const paymentLinkWithParams = `${paymentLink}?client_reference_id=${Date.now()}&success_url=${encodeURIComponent(returnUrl)}`;
         
         // Перенаправляем на Stripe Payment Link
         window.location.href = paymentLinkWithParams;

@@ -618,6 +618,9 @@ body {
     border: 2px solid transparent;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .service-card::before {
@@ -650,6 +653,15 @@ body {
     position: relative;
     z-index: 1;
 }
+
+.service-card > *:not(.btn-pay-service) {
+    flex-shrink: 0;
+}
+
+.btn-pay-service {
+    margin-top: auto;
+}
+
 
 .service-icon {
     width: 60px;
@@ -701,9 +713,10 @@ body {
 
 .btn-pay-service {
     width: 100%;
-    padding: 12px 24px;
-    background: var(--gradient-primary);
-    color: white;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    background-color: #6366f1;
+    color: white !important;
     border: none;
     border-radius: 8px;
     font-size: 15px;
@@ -711,11 +724,28 @@ body {
     cursor: pointer;
     transition: all 0.7s ease;
     margin-top: auto;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.3);
+    position: relative;
+    z-index: 2;
+    font-family: inherit;
 }
 
 .btn-pay-service:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4);
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+}
+
+.btn-pay-service:active {
+    transform: translateY(0);
+}
+
+.btn-pay-service:focus {
+    outline: 2px solid rgba(99, 102, 241, 0.5);
+    outline-offset: 2px;
 }
 
 /* Payment Modal */
@@ -919,6 +949,7 @@ body {
         padding: 12px;
     }
 }
+
 
 /* ===========================
    About Section

@@ -193,11 +193,16 @@
     <script>
         // Get payment details from URL
         const urlParams = new URLSearchParams(window.location.search);
-        const paymentIntentId = urlParams.get('payment_intent') || 'pi_demo_123';
+        const paymentIntentId = urlParams.get('payment_intent') || urlParams.get('client_reference_id') || 'pi_demo_123';
+        const serviceName = urlParams.get('service') || 'Услуга';
         const amount = urlParams.get('amount') || '5000';
         
         // Update payment details
-        document.getElementById('payment-id').textContent = paymentIntentId.substring(0, 20) + '...';
+        if (paymentIntentId && paymentIntentId !== 'undefined') {
+            document.getElementById('payment-id').textContent = paymentIntentId.substring(0, 20) + '...';
+        } else {
+            document.getElementById('payment-id-item').style.display = 'none';
+        }
         
         // Format and display amount
         const amountNum = parseFloat(amount);
@@ -212,9 +217,6 @@
         }
         
         // Hide items if no data
-        if (!paymentIntentId || paymentIntentId === 'undefined') {
-            document.getElementById('payment-id-item').style.display = 'none';
-        }
         if (!amount || amount === 'undefined') {
             document.getElementById('payment-amount-item').style.display = 'none';
         }
