@@ -2,7 +2,11 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#6366f1">
     
     <!-- Primary Meta Tags -->
     <title>WebStudio - Разработка сайтов и веб-приложений в Москве | Веб-дизайн, SEO, E-Commerce</title>
@@ -372,6 +376,7 @@
                     </div>
                     <h3>Веб-дизайн</h3>
                     <p>Создаём уникальный дизайн, который отражает ваш бренд и привлекает клиентов</p>
+                    <button class="btn-pay-service" onclick="openPaymentModal('Веб-дизайн', 5000)">Оплатить</button>
                 </div>
 
                 <div class="service-card" data-aos="fade-up" data-aos-delay="100">
@@ -383,6 +388,7 @@
                     </div>
                     <h3>Разработка</h3>
                     <p>Чистый код, современные технологии и быстрая загрузка страниц</p>
+                    <button class="btn-pay-service" onclick="openPaymentModal('Разработка', 10000)">Оплатить</button>
                 </div>
 
                 <div class="service-card" data-aos="fade-up" data-aos-delay="200">
@@ -394,6 +400,7 @@
                     </div>
                     <h3>SEO оптимизация</h3>
                     <p>Настройка для поисковых систем и продвижение в топ выдачи</p>
+                    <button class="btn-pay-service" onclick="openPaymentModal('SEO оптимизация', 7000)">Оплатить</button>
                 </div>
 
                 <div class="service-card" data-aos="fade-up" data-aos-delay="300">
@@ -405,6 +412,7 @@
                     </div>
                     <h3>Адаптивность</h3>
                     <p>Сайт идеально выглядит на всех устройствах и экранах</p>
+                    <button class="btn-pay-service" onclick="openPaymentModal('Адаптивность', 4000)">Оплатить</button>
                 </div>
 
                 <div class="service-card" data-aos="fade-up" data-aos-delay="400">
@@ -415,6 +423,7 @@
                     </div>
                     <h3>Поддержка</h3>
                     <p>Техподдержка и обновление контента после запуска</p>
+                    <button class="btn-pay-service" onclick="openPaymentModal('Поддержка', 3000)">Оплатить</button>
                 </div>
 
                 <div class="service-card" data-aos="fade-up" data-aos-delay="500">
@@ -426,6 +435,7 @@
                     </div>
                     <h3>E-Commerce</h3>
                     <p>Интернет-магазины с удобной системой управления товарами</p>
+                    <button class="btn-pay-service" onclick="openPaymentModal('E-Commerce', 15000)">Оплатить</button>
                 </div>
             </div>
         </div>
@@ -581,8 +591,64 @@
         </div>
     </footer>
 
+    <!-- Stripe Payment -->
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="payment-modal">
+        <div class="payment-modal-content">
+            <button class="payment-modal-close" id="payment-close">&times;</button>
+            <div class="payment-header">
+                <h2>Оплата услуг</h2>
+                <p>Выберите способ оплаты</p>
+            </div>
+            
+            <form id="payment-form">
+                <div id="payment-element" style="display: none;">
+                    <!-- Stripe Elements will create form elements here (скрыто, используем Payment Link) -->
+                </div>
+                <div class="payment-info-box">
+                    <p style="margin-bottom: 16px; color: var(--text-secondary);">После нажатия кнопки "Оплатить" вы будете перенаправлены на защищенную страницу Stripe, где сможете выбрать способ оплаты:</p>
+                    <div id="payment-methods" class="payment-methods">
+                        <div class="payment-method-badge">
+                            <span class="payment-method-icon">💳</span>
+                            <span class="payment-method-label">Банковская карта</span>
+                        </div>
+                        <div class="payment-method-badge">
+                            <span class="payment-method-icon">🏦</span>
+                            <span class="payment-method-label">СБП</span>
+                        </div>
+                        <div class="payment-method-badge">
+                            <span class="payment-method-icon">💰</span>
+                            <span class="payment-method-label">Электронные кошельки</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="payment-summary">
+                    <div class="payment-item">
+                        <span>Услуга:</span>
+                        <span id="payment-service-name">Разработка сайта</span>
+                    </div>
+                    <div class="payment-item">
+                        <span>Сумма:</span>
+                        <span id="payment-amount">5 000 ₽</span>
+                    </div>
+                </div>
+                
+                <button type="submit" id="submit-payment" class="btn btn-primary btn-full">
+                    <span id="button-text">Оплатить</span>
+                    <span id="spinner" class="spinner hidden"></span>
+                </button>
+                
+                <div id="payment-message" class="payment-message"></div>
+            </form>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script src="script.js"></script>
+    <script src="stripe-payment.js"></script>
     <script>
         AOS.init({
             duration: 700,

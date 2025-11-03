@@ -461,9 +461,8 @@ body {
     border-radius: 16px;
     overflow: hidden;
     box-shadow: var(--shadow-lg);
-    will-change: transform, box-shadow, border-color;
-    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                box-shadow 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    will-change: box-shadow, border-color;
+    transition: box-shadow 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
                 border-color 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     cursor: pointer;
     position: relative;
@@ -485,17 +484,12 @@ body {
 }
 
 .portfolio-item:hover {
-    transform: translateY(-12px);
     box-shadow: 0 25px 50px rgba(99, 102, 241, 0.25), 0 10px 20px rgba(0, 0, 0, 0.15);
     border: 2px solid rgba(99, 102, 241, 0.3);
 }
 
 .portfolio-item:hover::before {
     opacity: 1;
-}
-
-.portfolio-item:hover .portfolio-image {
-    transform: translateZ(0);
 }
 
 .portfolio-image {
@@ -702,6 +696,228 @@ body {
 .service-card p {
     color: var(--text-secondary);
     line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.btn-pay-service {
+    width: 100%;
+    padding: 12px 24px;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.7s ease;
+    margin-top: auto;
+}
+
+.btn-pay-service:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+}
+
+/* Payment Modal */
+.payment-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+}
+
+.payment-modal.active {
+    display: flex;
+}
+
+.payment-modal-content {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.3s ease-out;
+}
+
+.payment-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: var(--bg-light);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.payment-modal-close:hover {
+    background: var(--border-color);
+    color: var(--text-primary);
+}
+
+.payment-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.payment-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.payment-header p {
+    color: var(--text-secondary);
+    font-size: 16px;
+}
+
+#payment-element {
+    margin: 24px 0;
+    padding: 20px;
+    background: var(--bg-light);
+    border-radius: 8px;
+}
+
+.payment-info-box {
+    background: rgba(99, 102, 241, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 24px 0;
+    border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+.payment-methods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.payment-method-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    flex: 1;
+    min-width: 120px;
+    justify-content: center;
+}
+
+.payment-method-icon {
+    font-size: 20px;
+}
+
+.payment-method-label {
+    font-weight: 500;
+    color: var(--text-primary);
+    font-size: 14px;
+}
+
+.payment-summary {
+    background: var(--bg-light);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 24px 0;
+}
+
+.payment-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.payment-item:last-child {
+    border-bottom: none;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--primary-color);
+}
+
+.payment-message {
+    display: none;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+.payment-message-error {
+    background: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.payment-message-info {
+    background: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+}
+
+.payment-message-success {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.6s linear infinite;
+}
+
+.spinner.hidden {
+    display: none;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .payment-modal-content {
+        padding: 24px 20px;
+    }
+    
+    .payment-header h2 {
+        font-size: 24px;
+    }
+    
+    .payment-methods {
+        gap: 8px;
+    }
+    
+    .payment-method-option {
+        padding: 12px;
+    }
 }
 
 /* ===========================
@@ -1137,7 +1353,16 @@ body {
     }
 }
 
+/* Mobile devices (iPhone, Android phones) */
 @media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+    
+    .header {
+        padding: 16px 0;
+    }
+    
     .nav-menu {
         position: fixed;
         left: -100%;
@@ -1149,6 +1374,10 @@ body {
         box-shadow: var(--shadow-xl);
         transition: var(--transition-base);
         gap: 0;
+        z-index: 999;
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     .nav-menu.active {
@@ -1156,12 +1385,26 @@ body {
     }
     
     .nav-link {
-        padding: 15px 0;
+        padding: 16px 0;
         border-bottom: 1px solid var(--border-color);
+        font-size: 16px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
     }
     
     .mobile-menu-toggle {
         display: flex;
+        width: 44px;
+        height: 44px;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .mobile-menu-toggle span {
+        width: 24px;
+        height: 2px;
+        background: var(--text-primary);
     }
     
     .mobile-menu-toggle.active span:nth-child(1) {
@@ -1177,69 +1420,278 @@ body {
     }
     
     .hero {
-        padding: 120px 0 60px;
+        padding: 100px 0 50px;
     }
     
     .hero-title {
-        font-size: 36px;
+        font-size: 32px;
+        line-height: 1.2;
     }
     
     .hero-description {
         font-size: 16px;
+        margin-bottom: 28px;
     }
     
     .hero-buttons {
         flex-direction: column;
+        gap: 12px;
     }
     
     .btn {
         width: 100%;
         text-align: center;
+        min-height: 48px;
+        font-size: 16px;
+    }
+    
+    .section {
+        padding: 60px 0;
     }
     
     .section-title {
-        font-size: 36px;
+        font-size: 32px;
+        line-height: 1.2;
+        margin-bottom: 16px;
     }
     
     .section-subtitle {
         font-size: 16px;
+        margin-bottom: 40px;
     }
     
     .portfolio-grid {
         grid-template-columns: 1fr;
+        gap: 24px;
     }
     
     .services-grid {
         grid-template-columns: 1fr;
+        gap: 24px;
     }
     
     .stats {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
     
     .footer-links {
         grid-template-columns: 1fr;
         gap: 30px;
     }
+    
+    .contact-content {
+        gap: 30px;
+    }
+    
+    .contact-form {
+        padding: 30px 20px;
+    }
+    
+    .about-content {
+        gap: 30px;
+    }
+    
+    .portfolio-image {
+        height: 240px;
+    }
 }
 
+/* iPhone SE, iPhone 6/7/8, small Android phones */
 @media (max-width: 480px) {
+    .container {
+        padding: 0 16px;
+    }
+    
+    .hero {
+        padding: 80px 0 40px;
+    }
+    
     .hero-title {
         font-size: 28px;
+        line-height: 1.2;
+    }
+    
+    .hero-description {
+        font-size: 15px;
+        margin-bottom: 24px;
     }
     
     .section-title {
         font-size: 28px;
+        line-height: 1.2;
+    }
+    
+    .section-subtitle {
+        font-size: 15px;
     }
     
     .card-1, .card-2, .card-3 {
-        width: 200px;
-        height: 150px;
+        width: 180px;
+        height: 130px;
     }
     
     .service-card,
     .contact-form {
-        padding: 30px 20px;
+        padding: 24px 16px;
+    }
+    
+    .portfolio-item {
+        border-radius: 12px;
+    }
+    
+    .btn {
+        padding: 14px 24px;
+        font-size: 15px;
+        min-height: 48px; /* Touch-friendly */
+    }
+    
+    .contact-item {
+        padding: 20px 16px;
+    }
+    
+    .about-card {
+        padding: 20px;
+    }
+    
+    .stats {
+        gap: 16px;
+    }
+    
+    .stat-item {
+        padding: 20px;
+    }
+    
+    .stat-number {
+        font-size: 32px;
+    }
+    
+    .footer-content {
+        padding: 40px 0 20px;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 14px 16px;
+        min-height: 48px; /* Touch-friendly */
+    }
+}
+
+/* iPhone X, iPhone 11 Pro, iPhone 12/13 mini */
+@media (max-width: 390px) {
+    .hero-title {
+        font-size: 24px;
+    }
+    
+    .section-title {
+        font-size: 24px;
+    }
+    
+    .container {
+        padding: 0 12px;
+    }
+    
+    .card-1, .card-2, .card-3 {
+        width: 160px;
+        height: 120px;
+    }
+}
+
+/* iPad, iPad Pro, Android tablets */
+@media (min-width: 481px) and (max-width: 1024px) {
+    .container {
+        padding: 0 32px;
+    }
+    
+    .hero-title {
+        font-size: 48px;
+    }
+    
+    .section-title {
+        font-size: 42px;
+    }
+    
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+    }
+    
+    .hero-visual {
+        height: 400px;
+    }
+    
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .about-content {
+        gap: 50px;
+    }
+}
+
+/* iPad Pro landscape, large tablets */
+@media (min-width: 1025px) and (max-width: 1366px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* iPhone landscape, small Android landscape */
+@media (max-width: 896px) and (orientation: landscape) {
+    .hero {
+        padding: 60px 0 40px;
+    }
+    
+    .hero-title {
+        font-size: 32px;
+    }
+    
+    .hero-visual {
+        height: 250px;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .btn {
+        min-height: 48px;
+        padding: 14px 28px;
+    }
+    
+    .nav-link {
+        padding: 12px 0;
+        min-height: 44px;
+    }
+    
+    .portfolio-item {
+        cursor: default;
+    }
+    
+    .contact-item {
+        cursor: default;
+    }
+    
+    /* Remove hover effects on touch devices */
+    .portfolio-item:hover {
+        transform: none;
+    }
+    
+    .btn-primary:hover,
+    .btn-secondary:hover {
+        transform: none;
     }
 }
 

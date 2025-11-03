@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const remember = document.getElementById('remember').checked;
             
             // Simple authentication (in production, use secure backend)
-            // Default credentials: admin / admin123
-            if (username === 'admin' && password === 'admin123') {
+            // Default credentials: admin / 132575
+            if (username === 'admin' && password === '132575') {
                 // Store session
                 sessionStorage.setItem('adminLoggedIn', 'true');
                 sessionStorage.setItem('adminUsername', username);
