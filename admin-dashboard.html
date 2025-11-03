@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - Дашборд | WebStudio</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-page">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>Web<span>Studio</span></h2>
+            <p class="admin-title">Админ-панель</p>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-item active" data-page="dashboard">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <rect x="3" y="3" width="7" height="7" stroke-width="2"/>
+                    <rect x="14" y="3" width="7" height="7" stroke-width="2"/>
+                    <rect x="3" y="14" width="7" height="7" stroke-width="2"/>
+                    <rect x="14" y="14" width="7" height="7" stroke-width="2"/>
+                </svg>
+                <span>Дашборд</span>
+            </a>
+            <a href="#projects" class="nav-item" data-page="projects">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <rect x="2" y="3" width="20" height="14" rx="2" stroke-width="2"/>
+                    <line x1="8" y1="21" x2="16" y2="21" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="12" y1="17" x2="12" y2="21" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span>Проекты</span>
+            </a>
+            <a href="#services" class="nav-item" data-page="services">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke-width="2"/>
+                </svg>
+                <span>Услуги</span>
+            </a>
+            <a href="#requests" class="nav-item" data-page="requests">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-width="2"/>
+                    <polyline points="22,6 12,13 2,6" stroke-width="2"/>
+                </svg>
+                <span>Заявки</span>
+            </a>
+            <a href="#settings" class="nav-item" data-page="settings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="3" stroke-width="2"/>
+                    <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3" stroke-width="2"/>
+                </svg>
+                <span>Настройки</span>
+            </a>
+            <a href="../index.html" class="nav-item nav-external">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke-width="2"/>
+                    <polyline points="15 3 21 3 21 9" stroke-width="2"/>
+                    <line x1="10" y1="14" x2="21" y2="3" stroke-width="2"/>
+                </svg>
+                <span>На сайт</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logout-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke-width="2"/>
+                    <polyline points="16 17 21 12 16 7" stroke-width="2"/>
+                    <line x1="21" y1="12" x2="9" y2="12" stroke-width="2"/>
+                </svg>
+                <span>Выйти</span>
+            </button>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <h1 class="page-title">Дашборд</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-menu">
+                    <div class="user-avatar">
+                        <span>A</span>
+                    </div>
+                    <span class="user-name">Администратор</span>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Dashboard Content -->
+        <div class="content-area" id="content-area">
+            <!-- Dashboard Page -->
+            <div class="page-content active" id="dashboard-page">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <rect x="2" y="3" width="20" height="14" rx="2" stroke-width="2"/>
+                                <line x1="8" y1="21" x2="16" y2="21" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="12" y1="17" x2="12" y2="21" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Всего проектов</h3>
+                            <p class="stat-number" id="total-projects">6</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-width="2"/>
+                                <polyline points="22,6 12,13 2,6" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Новых заявок</h3>
+                            <p class="stat-number" id="new-requests">0</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-purple">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Услуг</h3>
+                            <p class="stat-number" id="total-services">6</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-orange">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke-width="2"/>
+                                <circle cx="9" cy="7" r="4" stroke-width="2"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke-width="2"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Клиентов</h3>
+                            <p class="stat-number" id="total-clients">150+</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>Последние заявки</h3>
+                        <div class="requests-list" id="recent-requests">
+                            <div class="empty-state">
+                                <p>Заявок пока нет</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3>Быстрые действия</h3>
+                        <div class="quick-actions">
+                            <button class="action-btn" onclick="showPage('projects')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <line x1="12" y1="5" x2="12" y2="19" stroke-width="2"/>
+                                    <line x1="5" y1="12" x2="19" y2="12" stroke-width="2"/>
+                                </svg>
+                                <span>Добавить проект</span>
+                            </button>
+                            <button class="action-btn" onclick="showPage('services')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <line x1="12" y1="5" x2="12" y2="19" stroke-width="2"/>
+                                    <line x1="5" y1="12" x2="19" y2="12" stroke-width="2"/>
+                                </svg>
+                                <span>Добавить услугу</span>
+                            </button>
+                            <button class="action-btn" onclick="showPage('settings')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <circle cx="12" cy="12" r="3" stroke-width="2"/>
+                                    <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3" stroke-width="2"/>
+                                </svg>
+                                <span>Настройки сайта</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Projects Page -->
+            <div class="page-content" id="projects-page">
+                <div class="page-header-actions">
+                    <h2>Управление проектами</h2>
+                    <button class="btn-primary" id="add-project-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <line x1="12" y1="5" x2="12" y2="19" stroke-width="2"/>
+                            <line x1="5" y1="12" x2="19" y2="12" stroke-width="2"/>
+                        </svg>
+                        Добавить проект
+                    </button>
+                </div>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Описание</th>
+                                <th>Технологии</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projects-table-body">
+                            <tr>
+                                <td>E-Commerce Platform</td>
+                                <td>Современный интернет-магазин</td>
+                                <td><span class="tag">React</span> <span class="tag">Node.js</span></td>
+                                <td>
+                                    <button class="btn-icon btn-edit" title="Редактировать">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke-width="2"/>
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke-width="2"/>
+                                        </svg>
+                                    </button>
+                                    <button class="btn-icon btn-delete" title="Удалить">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <polyline points="3 6 5 6 21 6" stroke-width="2"/>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-width="2"/>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Services Page -->
+            <div class="page-content" id="services-page">
+                <div class="page-header-actions">
+                    <h2>Управление услугами</h2>
+                    <button class="btn-primary" id="add-service-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <line x1="12" y1="5" x2="12" y2="19" stroke-width="2"/>
+                            <line x1="5" y1="12" x2="19" y2="12" stroke-width="2"/>
+                        </svg>
+                        Добавить услугу
+                    </button>
+                </div>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Описание</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="services-table-body">
+                            <tr>
+                                <td>Веб-дизайн</td>
+                                <td>Создаём уникальный дизайн, который отражает ваш бренд</td>
+                                <td>
+                                    <button class="btn-icon btn-edit" title="Редактировать">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke-width="2"/>
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke-width="2"/>
+                                        </svg>
+                                    </button>
+                                    <button class="btn-icon btn-delete" title="Удалить">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <polyline points="3 6 5 6 21 6" stroke-width="2"/>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-width="2"/>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Requests Page -->
+            <div class="page-content" id="requests-page">
+                <div class="page-header-actions">
+                    <h2>Заявки с сайта</h2>
+                    <button class="btn-secondary" id="mark-all-read-btn">Отметить все как прочитанные</button>
+                </div>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Дата</th>
+                                <th>Имя</th>
+                                <th>Email</th>
+                                <th>Сообщение</th>
+                                <th>Статус</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requests-table-body">
+                            <tr class="request-new">
+                                <td>27.01.2025</td>
+                                <td>Иван Иванов</td>
+                                <td>ivan@example.com</td>
+                                <td>Хочу заказать сайт...</td>
+                                <td><span class="badge badge-new">Новая</span></td>
+                                <td>
+                                    <button class="btn-icon btn-view" title="Просмотр">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-width="2"/>
+                                            <circle cx="12" cy="12" r="3" stroke-width="2"/>
+                                        </svg>
+                                    </button>
+                                    <button class="btn-icon btn-delete" title="Удалить">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <polyline points="3 6 5 6 21 6" stroke-width="2"/>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-width="2"/>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Settings Page -->
+            <div class="page-content" id="settings-page">
+                <div class="page-header-actions">
+                    <h2>Настройки сайта</h2>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3>Основные настройки</h3>
+                        <form class="settings-form">
+                            <div class="form-group">
+                                <label for="site-name">Название сайта</label>
+                                <input type="text" id="site-name" value="WebStudio">
+                            </div>
+                            <div class="form-group">
+                                <label for="site-email">Email для заявок</label>
+                                <input type="email" id="site-email" value="hello@webstudio.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="site-phone">Телефон</label>
+                                <input type="tel" id="site-phone" value="+7 (999) 123-45-67">
+                            </div>
+                            <button type="submit" class="btn-primary">Сохранить</button>
+                        </form>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <h3>SEO настройки</h3>
+                        <form class="settings-form">
+                            <div class="form-group">
+                                <label for="meta-description">Мета-описание</label>
+                                <textarea id="meta-description" rows="3">Профессиональная веб-студия с 5+ летним опытом...</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="meta-keywords">Ключевые слова</label>
+                                <input type="text" id="meta-keywords" value="веб-разработка, создание сайтов...">
+                            </div>
+                            <button type="submit" class="btn-primary">Сохранить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modals -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+    
+    <script src="admin-dashboard.js"></script>
+</body>
+</html>
+
